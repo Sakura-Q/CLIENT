@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="pic">
+    <file>imag/12.png</file>
+    <file>imag/icon_enoff.ICO</file>
+    <file>imag/icon_enon.ico</file>
+    <file>imag/QQ.png</file>
+    <file>imag/yasuo.ico</file>
+    <file>imag/yasuo.png</file>
+  </qresource>
+</RCC>
