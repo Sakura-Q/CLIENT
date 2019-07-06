@@ -4,22 +4,12 @@ import sys
 from PyQt5.QtGui import *
 from Amplifer import *
 from Dialog import *
-from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtWebEngineWidgets import*
-from PyQt5.QtCore import *
+from stopThreading import StopThreading
 import socket
 import threading
-import ctypes
-import inspect
 import webbrowser
 import time
-# class MyQwidget(QDialog,Ui_Dialog):
-#     # signal_write_msg = QtCore.pyqtSignal(str)
-#     def __init__(self, parent=None):
-#         super(MyQwidget,self).__init__(parent)
-#         self.setupUi(self)
-
 
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
@@ -28,8 +18,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, st,parent=None):
         super(MyMainWindow, self).__init__(parent)
 #        设置界面图标----------------2019.4.2
-        self.setWindowIcon(QIcon('./imag/12.png'))
-        
+        self.setWindowIcon(QIcon('./imag/13.png'))
+
         self.setupUi(self)
         self.msg = None
         self.port = None
@@ -40,23 +30,48 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.client_address = None
         self.connect()
         self.st=st
-        #数据解析
+
+        # 数据解析
         self.TX_BUFSIZE = 150
         self.RX_BUFSIZE = 5000
 
-        self.bSerialTXBuff =['0']*50
+        self.bSerialTXBuff = ['0'] * 50
         self.bASCIITemp = [0, 0]
         self.bNetworkPortType = 0
         self.wCommReadDataStartAddr = 0
         self.wCommReadDataCount = 0
-        self.wDataRam=[0]*100
+        self.wDataRam = [0] * 100
         self.wRunState1 = 0
         self.wRunState2 = 0
         self.wFaultState = 0
         self.wCommTXDataAddr = 0
 
+        self.m_wFlutterFrequency = 0
+        self.m_wFlutterAmplitude = 0
+        self.m_wSignalThreshold = 0
         self.m_wStepSignalA = 0
         self.m_wStepSignalB = 0
+        self.m_wReferenceValue1 =0
+        self.m_wReferenceValue2= 0
+        self.m_wReferenceValue3 = 0
+        self.m_wReferenceValue4 = 0
+        self.wTempReferenceValue1=0
+        self.wTempReferenceValue2 = 0
+        self.wTempReferenceValue3=0
+        self.wTempReferenceValue4 = 0
+
+        self.m_wReferenceValuePositive =0
+        self.wCurrentSignalChannal = 8
+        self.m_wCurrentKP = 0
+        self.m_wCurrentKI = 0
+        self.m_wDisplacementKP = 0
+        self.m_wDisplacementKI = 0
+        self.m_wDisplacementKD = 0
+        self.m_wPistonDisplacementKP=0
+        self.m_wPistonDisplacementKI=0
+        self.m_wPistonDisplacementKD=0
+
+
         # 创建TCP/UDP套接字，AF_INET表示使用IPv4地址，SOCK_STREAM表示socket类型为流格式套接字
         self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -70,11 +85,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.signal_write_msg.connect(self.write_msg)
         self.pushButton_ip_connect.clicked.connect(self.click_ip_link)
         self.pushButton_ip_disconnect.clicked.connect(self.click_ip_unlink)
-        self.pushButton_clear.clicked.connect(self.click_clear)
-        self.pushButton_send.clicked.connect(self.tcp_send)
-        # self.pushButton_stap_read.clicked.connect(self.stap_read)
-        # self.pushButton_stap_set.clicked.connect(self.stap_set)
+        self.pushButton_stap_read.clicked.connect(self.stap_read)
+        self.pushButton_stap_set.clicked.connect(self.stap_set)
         self.pushButton_update_program.clicked.connect(self.click_update_program)
+        self.pushButton_input_parameter_read.clicked.connect(self.input_parameter_read)
+        self.pushButton_input_parameter_set.clicked.connect(self.input_parameter_set)
+        self.pushButton_spool_current_read.clicked.connect(self.spool_current_read)
+        self.pushButton_spool_current_set.clicked.connect(self.spool_current_set)
+        self.pushButton_piston_displacement_read.clicked.connect(self.piston_displacement_read)
+        self.pushButton_piston_displacement_set.clicked.connect(self.piston_displacement_set)
+        self.pushButton_spool_displacement_read.clicked.connect(self.spool_displacement_read)
+        self.pushButton_spool_displacement_set.clicked.connect(self.spool_displacement_set)
+
 
     def click_ip_link(self):
         """
@@ -93,25 +115,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         """
         self.close_all()
         self.label_6.setPixmap(QtGui.QPixmap(":/pic/imag/icon_enoff.ICO"))
-        # self.link = False
-        # self.pushButton_ip_disconnect.setEnabled(False)
-        # self.pushButton_ip_connect.setEnabled(True)
 
     def click_update_program(self):
-        # self.browser=QWebEngineView()
-        # self.browser.openUrl(QUrl('http://www.baidu.com'))
-        # # self.setCentralWidget(self.browser)
-
-
-        # dig=MyQwidget()
-        # dig.show()
-        # dig.exec_()
         reply = QMessageBox.information(self, "更新程序", "确定更新程序", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-        print(int(reply))
         if reply==16384:
-            webbrowser.open('http://www.baidu.com')
-
-
+            self.click_clear()
+            self.msg = '更新程序ing\n'
+            self.signal_write_msg.emit("写入")
+            self.wDataRam[40] = 1
+            self.DataProduce(6, 40, 1)
+            self.tcp_send()
+            time.sleep(15)
+            webbrowser.open('http://10.13.106.216')
 
 
     def click_clear(self):
@@ -153,6 +168,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         功能函数，关闭网络连接的方法
         :return:
         """
+        self.click_clear()
         try:
             self.tcp_socket.close()
             if self.link is True:
@@ -172,6 +188,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         功能函数，TCP客户端连接其他服务端的方法
         :return:
         """
+        self.click_clear()
         self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.tcp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:
@@ -202,12 +219,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         while True:
             recv_msg = self.tcp_socket.recv(1024)
             if recv_msg:
-                # print(recv_msg)
                 msg = recv_msg.decode('utf-8')
-                # print(msg)
-                # print(list(msg))
                 self.DateProcess(list(msg))
-                print(self.wDataRam)
                 self.msg = '来自IP:{}端口:{}:\n{}\n'.format(self.address[0], self.address[1], msg)
                 self.signal_write_msg.emit(msg)
             else:
@@ -222,21 +235,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         功能函数，用于TCP服务端和TCP客户端发送消息
         :return: None
         """
+        self.click_clear()
         if self.link is False:
             self.msg = '请选择服务，并点击连接网络\n'
             self.signal_write_msg.emit("写入")
         else:
             try:
-
-                # send_msg = (str(self.textEdit_send.toPlainText())).encode('utf-8')
-                # self.wDataRam[5]=send_msg
-                # self.DataProduce(5,8,2)
                 send_msg=self.bSerialTXBuff
                 send_msg =''.join(send_msg)
                 send_msg=(str(send_msg)).encode('utf-8')
 
-                print(self.bSerialTXBuff)
-                print(send_msg)
+                 # print(self.bSerialTXBuff)
                 self.tcp_socket.send(send_msg)
                 self.msg = 'TCP客户端已发送\n'
                 self.signal_write_msg.emit(self.msg)
@@ -246,32 +255,184 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                 self.signal_write_msg.emit("写入")
 
     def stap_read(self):
-
+        self.click_clear()
         if self.link is False:
             self.msg = '请选择服务，并点击连接网络\n'
             self.signal_write_msg.emit("写入")
         else:
             self.DataProduce(5,12,5)
-            #print(self.bSerialTXBuff)
             self.tcp_send()
+            time.sleep(0.5)
+            self.m_wFlutterFrequency = self.wDataRam[12]
+            self.m_wFlutterAmplitude = self.wDataRam[13]
+            self.m_wSignalThreshold = self.wDataRam[14]
             self.m_wStepSignalA = self.wDataRam[15]
             self.m_wStepSignalB = self.wDataRam[16]
-            print(self.m_wStepSignalA,self.m_wStepSignalB)
             self.lineEdit_stapA.setText(str(self.m_wStepSignalA))
             self.lineEdit_stapB.setText(str(self.m_wStepSignalB))
+            self.lineEdit_Frequency.setText(str(self.m_wFlutterFrequency))
+            self.lineEdit_Amplitude.setText(str(self.m_wFlutterAmplitude))
+            self.lineEdit_threshold.setText(str(self.m_wSignalThreshold))
+
+
 
     def stap_set(self):
+        self.click_clear()
         if self.link is False:
             self.msg = '请选择服务，并点击连接网络\n'
             self.signal_write_msg.emit("写入")
         else:
             self.m_wStepSignalA=str(self.lineEdit_stapA.text())
             self.m_wStepSignalB=str(self.lineEdit_stapB.text())
-            self.wDataRam[15]=int(self.m_wStepSignalA)
-            self.wDataRam[16]=int(self.m_wStepSignalB)
-            print(self.wDataRam)
+            self.m_wFlutterFrequency = str(self.lineEdit_Frequency.text())
+            self.m_wFlutterAmplitude = str(self.lineEdit_Amplitude.text())
+            self.m_wSignalThreshold  =  str(self.lineEdit_threshold.text())
+            self.wDataRam[12] = int(self.m_wFlutterFrequency)
+            self.wDataRam[13] = int(self.m_wFlutterAmplitude)
+            self.wDataRam[14] = int(self.m_wSignalThreshold)
+            self.wDataRam[15] = int(self.m_wStepSignalA)
+            self.wDataRam[16] = int(self.m_wStepSignalB)
             self.DataProduce(6,12,5)
-            print(self.bSerialTXBuff)
+            self.tcp_send()
+
+    def input_parameter_read(self):
+        self.click_clear()
+        if self.link is False:
+            self.msg = '请选择服务，并点击连接网络\n'
+            self.signal_write_msg.emit("写入")
+        else:
+            self.DataProduce(5, 0, 6)
+            self.tcp_send()
+            time.sleep(0.5)
+            self.m_wReferenceValue1 = self.wDataRam[0]
+            self.m_wReferenceValue2 = self.wDataRam[1]
+            self.m_wReferenceValue3 = self.wDataRam[2]
+            self.m_wReferenceValue4 = self.wDataRam[3]
+            self.m_wReferenceValuePositive = self.wDataRam[4]  # 0代表是负数，1代表是正数
+            self.wCurrentSignalChannal = self.wDataRam[5]
+            if self.m_wReferenceValuePositive==0:
+                self.lineEdit_input_set.setText('-'+str(self.m_wReferenceValue1))
+            else:
+                self.lineEdit_input_set.setText(str(self.m_wReferenceValue1))
+
+
+
+
+    def input_parameter_set(self):
+        self.click_clear()
+        if self.link is False:
+            self.msg = '请选择服务，并点击连接网络\n'
+            self.signal_write_msg.emit("写入")
+        else:
+            if self.radioButton_digital.isChecked()==True:
+                self.wCurrentSignalChannal = 8
+                self.m_wReferenceValue1 = int(self.lineEdit_input_set.text())
+                if int(self.m_wReferenceValue1)< 0:
+                    self.wTempReferenceValue1 = (-1) * self.m_wReferenceValue1
+                    self.m_wReferenceValuePositive = 0
+                else:
+                    self.wTempReferenceValue1 = self.m_wReferenceValue1
+                    self.m_wReferenceValuePositive = 1
+                self.wDataRam[0] = int(self.wTempReferenceValue1)
+                self.wDataRam[1] = int(self.wTempReferenceValue2)
+                self.wDataRam[2] = int(self.wTempReferenceValue3)
+                self.wDataRam[3] = int(self.wTempReferenceValue4)
+                self.wDataRam[4] = int(self.m_wReferenceValuePositive)
+                self.wDataRam[5] = int(self.wCurrentSignalChannal)
+                self.DataProduce(6, 0, 6)
+                self.tcp_send()
+            else:
+                self.msg = '请选择输入类型\n'
+                self.signal_write_msg.emit("写入")
+
+
+    def spool_current_read(self):
+        self.click_clear()
+        if self.link is False:
+            self.msg = '请选择服务，并点击连接网络\n'
+            self.signal_write_msg.emit("写入")
+        else:
+            self.DataProduce(5, 38, 2)
+            self.tcp_send()
+            time.sleep(0.5)
+            self.m_wCurrentKP = self.wDataRam[38]
+            self.m_wCurrentKI = self.wDataRam[39]
+            self.lineEdit_spool_current_p.setText(str(self.m_wCurrentKP))
+            self.lineEdit_spool_current_i.setText(str(self.m_wCurrentKI))
+
+    def spool_current_set(self):
+        self.click_clear()
+        if self.link is False:
+            self.msg = '请选择服务，并点击连接网络\n'
+            self.signal_write_msg.emit("写入")
+
+        else:
+            self.m_wCurrentKP = str(self.lineEdit_spool_current_p.text())
+            self.m_wCurrentKI = str(self.lineEdit_spool_current_i.text())
+            self.wDataRam[38] = int(self.m_wCurrentKP)
+            self.wDataRam[39] = int(self.m_wCurrentKI)
+            self.DataProduce(6,38,2)
+            self.tcp_send()
+
+    def spool_displacement_read(self):
+        self.click_clear()
+        if self.link is False:
+            self.msg = '请选择服务，并点击连接网络\n'
+            self.signal_write_msg.emit("写入")
+        else:
+            self.DataProduce(5, 40,3)
+            self.tcp_send()
+            time.sleep(0.5)
+            self.m_wDisplacementKP = self.wDataRam[40]
+            self.m_wDisplacementKI = self.wDataRam[41]
+            self.m_wDisplacementKD = self.wDataRam[42]
+            self.lineEdit_spool_displacement_p.setText(str(self.m_wDisplacementKP))
+            self.lineEdit_spool_displacement_i.setText(str(self.m_wDisplacementKI))
+            self.lineEdit_spool_displacement_d.setText(str(self.m_wDisplacementKD))
+    def spool_displacement_set(self):
+        self.click_clear()
+        if self.link is False:
+            self.msg = '请选择服务，并点击连接网络\n'
+            self.signal_write_msg.emit("写入")
+        else:
+            self.m_wDisplacementKP = str(self.lineEdit_spool_displacement_p.text())
+            self.m_wDisplacementKI = str(self.lineEdit_spool_displacement_i.text())
+            self.m_wDisplacementKD = str(self.lineEdit_spool_displacement_d.text())
+            self.wDataRam[40] = int(self.m_wDisplacementKP)
+            self.wDataRam[41] = int(self.m_wDisplacementKI)
+            self.wDataRam[42] = int(self.m_wDisplacementKD)
+            self.DataProduce(6, 40,3)
+            self.tcp_send()
+
+    def piston_displacement_read(self):
+        self.click_clear()
+        if self.link is False:
+            self.msg = '请选择服务，并点击连接网络\n'
+            self.signal_write_msg.emit("写入")
+        else:
+            self.DataProduce(5, 43, 3)
+            self.tcp_send()
+            time.sleep(0.5)
+            self.m_wPistonDisplacementKP = self.wDataRam[43]
+            self.m_wPistonDisplacementKI = self.wDataRam[44]
+            self.m_wPistonDisplacementKD = self.wDataRam[45]
+            self.lineEdit_piston_displacement_p.setText(str(self.m_wPistonDisplacementKP))
+            self.lineEdit_piston_displacement_i.setText(str(self.m_wPistonDisplacementKI))
+            self.lineEdit_piston_displacement_d.setText(str(self.m_wPistonDisplacementKD))
+
+    def piston_displacement_set(self):
+        self.click_clear()
+        if self.link is False:
+            self.msg = '请选择服务，并点击连接网络\n'
+            self.signal_write_msg.emit("写入")
+        else:
+            self.m_wPistonDisplacementKP = str(self.lineEdit_piston_displacement_p.text())
+            self.m_wPistonDisplacementKI = str(self.lineEdit_piston_displacement_i.text())
+            self.m_wPistonDisplacementKD = str(self.lineEdit_piston_displacement_d.text())
+            self.wDataRam[43] = int(self.m_wPistonDisplacementKP)
+            self.wDataRam[44] = int(self.m_wPistonDisplacementKI)
+            self.wDataRam[45] = int(self.m_wPistonDisplacementKD)
+            self.DataProduce(6, 43, 3)
             self.tcp_send()
 
     # bSerialRXBuff[RX_BUFSIZE]=[0]
@@ -284,7 +445,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                 wHex = wHex * 16 + bTemp - 48
             else:
                 wHex = wHex * 16 + bTemp - 55
-
         return wHex
 
 
@@ -299,6 +459,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.bASCIITemp[1] = self.ASCIITemp + 55
         else:
             self.bASCIITemp[1] = self.ASCIITemp + 48
+
 
     def DateProcess(self,sever_recbuf):
         self.bCommFCS = 0
@@ -343,7 +504,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.bNetworkPortType = 9
         elif case == '8':
             self.bNetworkPortType = 8
-        print(self.wDataRam)
+
+
     def DataProduce(self,bCommType, wCommReadDataStartAddr, wCommChangeDateStartCount):
         bCommmFCS = 0
         # del self.bSerialTXBuff[:]
@@ -431,56 +593,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.bSerialTXBuff[self.wCommTXDataAddr] = '*'
         self.wCommTXDataLength = self.wCommTXDataAddr
 
-class StopThreading:
-    """强制关闭线程的方法"""
-
-    @staticmethod
-    def _async_raise(tid, exc_type):
-        tid = ctypes.c_long(tid)
-        if not inspect.isclass(exc_type):
-            exc_type = type(exc_type)
-        res = ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, ctypes.py_object(exc_type))
-        if res == 0:
-            raise ValueError("invalid thread id")
-        elif res != 1:
-            ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, None)
-            raise SystemError("PyThreadState_SetAsyncExc failed")
-
-    def stop_thread(self, thread):
-        self._async_raise(thread.ident, SystemExit)
-
-
-#class Icon(QWidget):  
-#    def __init__(self,  parent = None):  
-#        super(Icon,self).__init__(parent)    
-#        self.initUI()
-#     
-#    #2   
-#    def initUI(self):
-##        self.setGeometry(300,  300,  250,  150)  
-##        self.setWindowTitle('演示程序图标例子')  
-#        self.setWindowIcon(QIcon('./images/1223475.png'))  
-#              
-#
-
-
-
 
 
 
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
-
     st=StopThreading()
     myWin = MyMainWindow(st)
-    # myWin.wDataRam[15]=8000
-    # myWin.wDataRam[16]=9000
-    # myWin.DataProduce(6,12,5)
-    # myWin.DataProduce(5, 12, 5)
-    print(myWin.bSerialTXBuff)
-    # myWin.DateProcess(myWin.bSerialTXBuff)
-    # print(myWin.wDataRam)
     myWin.show()
     sys.exit(app.exec_())
 
@@ -490,3 +610,19 @@ if __name__ == "__main__":
 # self.lineEdit_ip.setText("10.13.106.216")
 # self.lineEdit_port.setText("8080")
 # self.lineEdit_port.setPlaceholderText("8080")
+# self.lineEdit_input_set.setText('0')
+# self.lineEdit_threshold.setText('0')
+# self.lineEdit_stapA.setText('0')
+# self.lineEdit_stapB.setText('0')
+# self.lineEdit_Frequency.setText('0')
+# self.lineEdit_Amplitude.setText('0')
+# self.lineEdit_spool_current_p.setText('0')
+# self.lineEdit_spool_current_i.setText('0')
+# self.lineEdit_spool_displacement_p.setText('0')
+# self.lineEdit_spool_displacement_i.setText('0')
+# self.lineEdit_spool_displacement_d.setText('0')
+# self.lineEdit_piston_displacement_p.setText('0')
+# self.lineEdit_piston_displacement_i.setText('0')
+# self.lineEdit_piston_displacement_d.setText('0')
+# MainWindow.setFixedSize(1120, 850)
+

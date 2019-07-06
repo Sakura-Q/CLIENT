@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['CallAmplifer.py'],
-             pathex=['E:\\Amplifer'],
+             pathex=['E:\\QT\\Amplifer'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -29,4 +29,4 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           runtime_tmpdir=None,
-          console=False , icon='e:\\Amplifer\\imag\\yasuo.ico')
+          console=False , icon='e:\\QT\\Amplifer\\imag\\13.ico')
