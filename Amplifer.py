@@ -459,7 +459,7 @@ class Ui_MainWindow(object):
         self.lineEdit_piston_displacement_p.setText('0')
         self.lineEdit_piston_displacement_i.setText('0')
         self.lineEdit_piston_displacement_d.setText('0')
-        MainWindow.setFixedSize(1120, 850)
+        MainWindow.setFixedSize(1200, 850)
 
 
 import apprcc_rc
