@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4b87dd9-aa49-40ef-b345-ffe15e880e44" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Amplifer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Amplifer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Amplifer.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Amplifer.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CallAmplifer.py" beforeDir="false" afterPath="$PROJECT_DIR$/CallAmplifer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dialog.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +21,7 @@
     <SUITE FILE_PATH="coverage/Amplifer$Amplifer.coverage" NAME="Amplifer Coverage Results" MODIFIED="1558576854084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Amplifer$yihuo.coverage" NAME="yihuo Coverage Results" MODIFIED="1552816071560" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Amplifer$Dialog.coverage" NAME="Dialog Coverage Results" MODIFIED="1555745736885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/CLIENT$CallAmplifer.coverage" NAME="CallAmplifer Coverage Results" MODIFIED="1562421089050" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CLIENT$CallAmplifer.coverage" NAME="CallAmplifer Coverage Results" MODIFIED="1562507734182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="Amplifer" />
@@ -35,38 +31,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CallAmplifer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="39" column="14" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
-              <folding>
-                <element signature="e#25#35#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="456">
+              <caret line="77" column="35" selection-start-line="77" selection-start-column="35" selection-end-line="77" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.6/dist-packages/matplotlib/__init__.py">
+        <entry file="file://D:/software/python/Lib/site-packages/matplotlib/font_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="1234" column="11" selection-start-line="1234" selection-start-column="6" selection-end-line="1236" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.6/dist-packages/matplotlib/font_manager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="1327" selection-start-line="1327" selection-end-line="1327" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tool.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="4" lean-forward="true" selection-end-column="23" />
+            <state relative-caret-position="1047">
+              <caret line="1240" selection-start-line="1240" selection-end-line="1240" />
             </state>
           </provider>
         </entry>
@@ -74,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Amplifer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="442" column="35" selection-start-line="442" selection-start-column="35" selection-end-line="442" selection-end-column="35" />
+            <state relative-caret-position="424">
+              <caret line="443" selection-start-line="443" selection-end-line="443" />
             </state>
           </provider>
         </entry>
@@ -116,8 +91,8 @@
     <option name="SORT_ALPHABETICALLY" value="true" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/change.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/tcp.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/change.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -153,7 +128,7 @@
           <expand>
             <path>
               <item name="CLIENT" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/Documents/git/v1.2/CLIENT" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
           </expand>
           <select />
@@ -344,7 +319,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="158137000" />
+    <option name="totallyTimeSpent" value="159585000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -356,15 +331,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="25" width="1301" height="743" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49944383" visible="true" weight="0.13545817" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49944383" visible="true" weight="0.19402985" />
       <window_info id="Structure" order="1" sideWeight="0.5005562" side_tool="true" weight="0.17857143" />
       <window_info id="Favorites" order="2" sideWeight="0.5005562" side_tool="true" weight="0.17857143" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.033370413" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3029316" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30289534" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39822024" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -373,7 +348,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.41205212" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.41202673" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32925472" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -504,34 +479,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python3.6/dist-packages/matplotlib/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="1234" column="11" selection-start-line="1234" selection-start-column="6" selection-end-line="1236" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python3.6/dist-packages/matplotlib/font_manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="1327" selection-start-line="1327" selection-end-line="1327" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file:///usr/local/lib/python3.6/dist-packages/matplotlib/__init__.py" />
+    <entry file="file:///usr/local/lib/python3.6/dist-packages/matplotlib/font_manager.py" />
     <entry file="file://$PROJECT_DIR$/Amplifer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="442" column="35" selection-start-line="442" selection-start-column="35" selection-end-line="442" selection-end-column="35" />
+        <state relative-caret-position="424">
+          <caret line="443" selection-start-line="443" selection-end-line="443" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/software/python/Lib/site-packages/matplotlib/font_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1047">
+          <caret line="1240" selection-start-line="1240" selection-end-line="1240" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CallAmplifer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="39" column="14" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
-          <folding>
-            <element signature="e#25#35#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="456">
+          <caret line="77" column="35" selection-start-line="77" selection-start-column="35" selection-end-line="77" selection-end-column="35" />
         </state>
       </provider>
     </entry>
