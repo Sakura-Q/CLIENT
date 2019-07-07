@@ -10,8 +10,87 @@ import socket
 import threading
 import webbrowser
 import time
+import random
+import matplotlib
+matplotlib.use("Qt5Agg")#声明使用QT5
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QVBoxLayout, QSizePolicy, QMessageBox, QWidget
+from numpy import arange, sin, pi
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from matplotlib import pyplot as plt
+font = {'family' : 'MicroSoft YaHei',
+              'weight' : 'bold',
+              }
+# font = {'family':'MicroSoft YaHei',
+#         'weight':'bold',
+#         'size':'larger'}               # 设置使用的字体（需要显示中文的时候使用）
+matplotlib.rc('font',**font)              #设置显示中文，与字体配合使用
+matplotlib.rc('font',family='MicroSoft YaHei')              #设置显示中文，与字体配合使用
+# matplotlib.rcParams['axes.unicode_minus']=False   #   当坐标轴有负号的时候可以显示负号
 
 
+
+
+
+class MyMplCanvas(FigureCanvas):
+    """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
+    def __init__(self, parent=None, width=5, height=4, dpi=100, title='title'):
+        self.title = title
+        fig = Figure(figsize=(width, height), dpi=dpi)#创建一个figure,是matplotlib下的figure,而不是matplotlib.pyplot下的figure
+        self.axes = fig.add_subplot(111)##将画布分割成1行1列，图像画在从左到右从上到下的第1块
+        fig.suptitle('title')
+        # self.axes.axis("equal")
+
+        # We want the axes cleared every time plot() is called
+        self.axes.hold(False)
+
+        self.compute_initial_figure()
+
+
+        FigureCanvas.__init__(self, fig)
+        self.setParent(parent)
+
+        FigureCanvas.setSizePolicy(self,
+                QSizePolicy.Expanding,
+                QSizePolicy.Expanding)
+        FigureCanvas.updateGeometry(self)
+
+    def compute_initial_figure(self):
+        pass
+
+
+class MyDynamicMplCanvas(MyMplCanvas):
+    """A canvas that updates itself every second with a new plot."""
+    def __init__(self, *args, **kwargs):
+        MyMplCanvas.__init__(self, *args, **kwargs)
+        timer = QtCore.QTimer(self)
+        # timer.timeout.connect(self.update_figure)
+        timer.start(1000)
+
+    def compute_initial_figure(self):
+        t = arange(0.0, 10.0, 0.01)
+        s = 5*sin(2*pi*t)
+        self.axes.plot(t, s)
+        # self.axes.plot([0, 1, 2, 3], [1, 2, 0, 4], 'r')
+
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('Sampling value')
+        self.axes.grid(True)
+        # plt.savefig("./ti.png")
+
+
+    def update_figure(self):
+        # Build a list of 4 random integers between 0 and 10 (both inclusive)
+        l = [random.randint(0, 10) for i in range(4)]
+        self.axes.plot([0, 1, 2, 3], l, 'r')
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('Sampling value')
+        self.axes.grid(True)
+        self.draw()
+
+
+##################################################
 class MyMainWindow(QMainWindow, Ui_MainWindow):
     signal_write_msg = QtCore.pyqtSignal(str)
 
@@ -71,10 +150,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.m_wPistonDisplacementKI=0
         self.m_wPistonDisplacementKD=0
 
-
         # 创建TCP/UDP套接字，AF_INET表示使用IPv4地址，SOCK_STREAM表示socket类型为流格式套接字
         self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.tab_2UI()
 
+    def tab_2UI(self):
+
+        self.main_widget = self.tab_2
+        dc = MyDynamicMplCanvas(self.main_widget, width=10, height=3, dpi=100, title='Dynamic tracking curve')
 
     def connect(self):
         """

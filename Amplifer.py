@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file 'Amplifer.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -86,7 +87,7 @@ class Ui_MainWindow(object):
         self.label_6.setPixmap(QtGui.QPixmap(":/pic/imag/icon_enoff.ICO"))
         self.label_6.setObjectName("label_6")
         self.horizontalLayoutWidget_8 = QtWidgets.QWidget(self.groupBox)
-        self.horizontalLayoutWidget_8.setGeometry(QtCore.QRect(120, 110, 160, 41))
+        self.horizontalLayoutWidget_8.setGeometry(QtCore.QRect(120, 110, 168, 41))
         self.horizontalLayoutWidget_8.setObjectName("horizontalLayoutWidget_8")
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_8)
         self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
@@ -101,12 +102,12 @@ class Ui_MainWindow(object):
         self.groupBox_8.setGeometry(QtCore.QRect(30, 230, 291, 201))
         self.groupBox_8.setObjectName("groupBox_8")
         self.frame = QtWidgets.QFrame(self.groupBox_8)
-        self.frame.setGeometry(QtCore.QRect(20, 20, 261, 161))
+        self.frame.setGeometry(QtCore.QRect(10, 30, 271, 161))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.horizontalLayoutWidget_7 = QtWidgets.QWidget(self.frame)
-        self.horizontalLayoutWidget_7.setGeometry(QtCore.QRect(10, 19, 231, 121))
+        self.horizontalLayoutWidget_7.setGeometry(QtCore.QRect(20, 20, 231, 121))
         self.horizontalLayoutWidget_7.setObjectName("horizontalLayoutWidget_7")
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_7)
         self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
@@ -118,7 +119,7 @@ class Ui_MainWindow(object):
         self.groupBox_9.setGeometry(QtCore.QRect(350, 230, 381, 201))
         self.groupBox_9.setObjectName("groupBox_9")
         self.verticalLayoutWidget_9 = QtWidgets.QWidget(self.groupBox_9)
-        self.verticalLayoutWidget_9.setGeometry(QtCore.QRect(20, 70, 51, 80))
+        self.verticalLayoutWidget_9.setGeometry(QtCore.QRect(20, 70, 51, 83))
         self.verticalLayoutWidget_9.setObjectName("verticalLayoutWidget_9")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_9)
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
@@ -133,7 +134,7 @@ class Ui_MainWindow(object):
         self.label_12.setObjectName("label_12")
         self.verticalLayout_7.addWidget(self.label_12)
         self.verticalLayoutWidget_11 = QtWidgets.QWidget(self.groupBox_9)
-        self.verticalLayoutWidget_11.setGeometry(QtCore.QRect(70, 70, 101, 80))
+        self.verticalLayoutWidget_11.setGeometry(QtCore.QRect(70, 70, 101, 89))
         self.verticalLayoutWidget_11.setObjectName("verticalLayoutWidget_11")
         self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_11)
         self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
@@ -288,7 +289,7 @@ class Ui_MainWindow(object):
         self.groupBox_6.setGeometry(QtCore.QRect(0, 160, 221, 181))
         self.groupBox_6.setObjectName("groupBox_6")
         self.verticalLayoutWidget_4 = QtWidgets.QWidget(self.groupBox_6)
-        self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(20, 30, 61, 81))
+        self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(20, 30, 61, 83))
         self.verticalLayoutWidget_4.setObjectName("verticalLayoutWidget_4")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_4)
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -303,7 +304,7 @@ class Ui_MainWindow(object):
         self.label_spool_displacement_d.setObjectName("label_spool_displacement_d")
         self.verticalLayout_4.addWidget(self.label_spool_displacement_d)
         self.verticalLayoutWidget_7 = QtWidgets.QWidget(self.groupBox_6)
-        self.verticalLayoutWidget_7.setGeometry(QtCore.QRect(90, 30, 111, 81))
+        self.verticalLayoutWidget_7.setGeometry(QtCore.QRect(90, 30, 111, 89))
         self.verticalLayoutWidget_7.setObjectName("verticalLayoutWidget_7")
         self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_7)
         self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
@@ -333,7 +334,7 @@ class Ui_MainWindow(object):
         self.groupBox_7.setGeometry(QtCore.QRect(0, 340, 221, 171))
         self.groupBox_7.setObjectName("groupBox_7")
         self.verticalLayoutWidget_5 = QtWidgets.QWidget(self.groupBox_7)
-        self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(20, 30, 58, 81))
+        self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(20, 30, 58, 83))
         self.verticalLayoutWidget_5.setObjectName("verticalLayoutWidget_5")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_5)
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
@@ -348,7 +349,7 @@ class Ui_MainWindow(object):
         self.label_piston_displacement_d.setObjectName("label_piston_displacement_d")
         self.verticalLayout_5.addWidget(self.label_piston_displacement_d)
         self.verticalLayoutWidget_8 = QtWidgets.QWidget(self.groupBox_7)
-        self.verticalLayoutWidget_8.setGeometry(QtCore.QRect(90, 30, 111, 81))
+        self.verticalLayoutWidget_8.setGeometry(QtCore.QRect(90, 30, 111, 89))
         self.verticalLayoutWidget_8.setObjectName("verticalLayoutWidget_8")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_8)
         self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
@@ -439,27 +440,6 @@ class Ui_MainWindow(object):
         self.pushButton_piston_displacement_set.setText(_translate("MainWindow", "设置完成"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "参数设置"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "曲线显示"))
-        self.lineEdit_ip.setInputMask("000.000.000.000;_")
-        self.lineEdit_ip.setInputMask("00.00.000.000;_")
-        self.lineEdit_ip.setPlaceholderText("10.13.106.216")
-        self.lineEdit_ip.setText("10.13.106.216")
-        self.lineEdit_port.setText("8080")
-        self.lineEdit_port.setPlaceholderText("8080")
-        self.lineEdit_input_set.setText('0')
-        self.lineEdit_threshold.setText('0')
-        self.lineEdit_stapA.setText('0')
-        self.lineEdit_stapB.setText('0')
-        self.lineEdit_Frequency.setText('0')
-        self.lineEdit_Amplitude.setText('0')
-        self.lineEdit_spool_current_p.setText('0')
-        self.lineEdit_spool_current_i.setText('0')
-        self.lineEdit_spool_displacement_p.setText('0')
-        self.lineEdit_spool_displacement_i.setText('0')
-        self.lineEdit_spool_displacement_d.setText('0')
-        self.lineEdit_piston_displacement_p.setText('0')
-        self.lineEdit_piston_displacement_i.setText('0')
-        self.lineEdit_piston_displacement_d.setText('0')
-        MainWindow.setFixedSize(1200, 850)
-
+        MainWindow.setFixedSize(1130, 850)
 
 import apprcc_rc
