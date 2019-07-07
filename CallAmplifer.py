@@ -157,7 +157,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def tab_2UI(self):
 
         self.main_widget = self.tab_2
-        dc = MyDynamicMplCanvas(self.main_widget, width=10, height=3, dpi=100, title='Dynamic tracking curve')
+        dc = MyDynamicMplCanvas(self.main_widget, width=10, height=6, dpi=100, title='Dynamic tracking curve')
 
     def connect(self):
         """
